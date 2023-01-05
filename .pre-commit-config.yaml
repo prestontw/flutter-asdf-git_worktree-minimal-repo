@@ -14,15 +14,19 @@ repos:
         name: flutter-analyze
         language: system
         entry: bash -c "flutter analyze"
+        verbose: true
     -   id: flutter-version
         name: flutter-version
         language: system
         entry: bash -c "flutter --version"
+        verbose: true
     -   id: flutter-test
         name: flutter-test
         language: system
         entry: bash -c "flutter test"
+        verbose: true
     -   id: flutter-version-2
         name: flutter-version-2
         language: system
         entry: bash -c "flutter --version"
+        verbose: true
