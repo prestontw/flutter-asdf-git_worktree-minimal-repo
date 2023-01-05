@@ -20,6 +20,11 @@ repos:
         language: system
         entry: bash -c "flutter --version"
         verbose: true
+    -   id: flutter-channel-list
+        name: flutter-channel-list
+        language: system
+        entry: bash -c "flutter channel"
+        verbose: true
     -   id: flutter-test
         name: flutter-test
         language: system
