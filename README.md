@@ -12,7 +12,7 @@ The specific combination of features is `flutter`, `pre-commit`, and `git-worktr
 - Install `flutter` through `git` (https://docs.flutter.dev/get-started/install/linux#install-flutter-manually). I used the specific command `git clone https://github.com/flutter/flutter.git -b beta` to check out the beta branch.
 - Add the `bin` directory of `flutter` to your `PATH`
 - Verify that everything works by making a dummy change in the checked-out repo and committing. (If things fail, try committing again and see if that passes.)
-- Make a git-worktree branch as a sibling of the main repo (`git worktree add ../sample-for-pre-commit`) and `cd` there
+- Make a git-worktree branch as a sibling of the main repo (`git worktree add ../pre-commit-in-worktree`) and `cd` there
 - Make a dummy change and commit it---watch the pre-commit output and how it doesn't know which channel it is on:
 
 ```
@@ -105,7 +105,7 @@ Tools • Dart 2.19.0 (build 2.19.0-444.2.beta) • DevTools 2.20.0
 ...
 ```
 
-Trying this outside of `pre-commit` also works fine:
+Trying this outside of `pre-commit` in the "git-worktree sibling folder" also works fine:
 ```
 pre-commit-in-worktree on  pre-commit-in-worktree is 📦 v1.0.0+1 via 🎯 took 27s 
 ❯ flutter --version
