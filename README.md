@@ -1,20 +1,18 @@
-# sample_for_pubspec
+# flutter-git-worktree-precommit-minimal-repo
 
 A new Flutter project.
 This was used to reproduce a strange case of pre-commit hooks failing to work.
-The specific combination of features is `asdf`, `flutter`, `pre-commit`, and `git-worktree`.
-Not using `asdf` caused pre-commit to work fine.
+The specific combination of features is `flutter`, `pre-commit`, and `git-worktree`.
 
 ## To reproduce:
 
 - Check out this repository
 - Install pre-commit (https://pre-commit.com/)
 - Install the hooks in this repo (`pre-commit install`)
-- Install `asdf` (https://asdf-vm.com/guide/getting-started.html)
-- Install `asdf-flutter` plugin (https://asdf-vm.com/guide/getting-started.html#_4-install-a-plugin (`asdf plugin add flutter`))
-- Install version through `asdf`: `asdf install`
-- Verify that everything works by making a dummy change and committing. If you run into flutter errors, `cd` to where `flutter` was installed (something like `~/.asdf/installs/flutter/3.3.10-stable` then checkout beta channel with `git checkout beta`)
-- Make a git-worktree branch as a sibling of the main repo (`git worktree add sample-for-pre-commit`) and `cd` there
+- Install `flutter` through `git` (https://docs.flutter.dev/get-started/install/linux#install-flutter-manually). I used the specific command `git clone https://github.com/flutter/flutter.git -b beta` to check out the beta branch.
+- Add the `bin` directory of `flutter` to your `PATH`
+- Verify that everything works by making a dummy change in the checked-out repo and committing. (If things fail, try committing again and see if that passes.)
+- Make a git-worktree branch as a sibling of the main repo (`git worktree add ../sample-for-pre-commit`) and `cd` there
 - Make a dummy change and commit it---watch the pre-commit output and how it doesn't know which channel it is on:
 
 ```
@@ -71,11 +69,30 @@ Note that the Flutter channel is not an official flutter channel but the name of
 git worktree branch we just made (in the above example, it's `pre-commit-in-worktree`).
 Also note that the framework revision commit is local to this repo (`8e93fdcde9`).
 
-I think this is an issue with `asdf` because this works fine if I use a local installation
-of flutter. And I think this is an issue with `asdf` over `asdf-flutter` since
-`asdf-flutter` is mostly concerned with installing and listing versions.
+The flutter version information might also display as
+```
+flutter-version..........................................................Passed
+- hook id: flutter-version
+- duration: 29.98s
 
-Note that this could also be an issue with `flutter` that `asdf` raises.
+Flutter • channel unknown • unknown source
+Framework • revision 951e00f39e (7 minutes ago) • 2023-01-06 10:46:25 -0600
+Engine • revision 7b8906637f
+Tools • Dart 2.19.0 (build 2.19.0-444.3.beta) • DevTools 2.20.0
+
+flutter-channel-list.....................................................Passed
+- hook id: flutter-channel-list
+- duration: 0.18s
+
+Flutter channels:
+  main
+  pre-commit-in-worktree
+
+Currently not on an official channel.
+```
+
+I am not sure whether this is an issue with `pre-commit` or `flutter` that causes
+git-worktree information to be picked up instead of flutter information.
 
 For another quick note, this is specific to non-main git worktree folders.
 Trying this in the "main" folder works fine:
@@ -88,11 +105,19 @@ Tools • Dart 2.19.0 (build 2.19.0-444.2.beta) • DevTools 2.20.0
 ...
 ```
 
+Trying this outside of `pre-commit` also works fine:
+```
+pre-commit-in-worktree on  pre-commit-in-worktree is 📦 v1.0.0+1 via 🎯 took 27s 
+❯ flutter --version
+Flutter 3.7.0-1.3.pre • channel beta • https://github.com/flutter/flutter.git
+Framework • revision 9b4416aaa7 (2 days ago) • 2023-01-04 17:29:34 -0600
+Engine • revision 7b8906637f
+Tools • Dart 2.19.0 (build 2.19.0-444.3.beta) • DevTools 2.20.0
+```
+
 
 ## Links for setting up this repro repo
 
-- https://asdf-vm.com/guide/getting-started.html#_6-set-a-version
-- https://dart.dev/get-dart/archive
 - https://docs.flutter.dev/development/tools/sdk/releases?tab=linux
 - https://docs.flutter.dev/get-started/test-drive?tab=terminal
 - https://pre-commit.com/
