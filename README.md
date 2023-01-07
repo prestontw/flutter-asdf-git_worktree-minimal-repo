@@ -1,18 +1,13 @@
 # git worktree and git hooks minimal reproducing repo
 
-This was used to reproduce a strange case of pre-commit hooks failing to work.
-The specific combination of features is `flutter`, `pre-commit`, and `git-worktree`.
-
-Note: the issue is actually entirely within git. Using
+This was used to reproduce a strange case of pre-commit hooks reporting unexpected `git` command outputs
+inside of a git-worktree.
 
 ```bash
 #!/usr/bin/env bash
 
 (cd $HOME/development/flutter && git -c log.showSignature=false log -n 1 --pretty=format:%H)
 ```
-
-we are able to do this entirely with git. Flutter is just an example of a project that is a git repo.
-TODO: test this with another project that isn't a git repo.
 
 ## To reproduce:
 
@@ -57,6 +52,7 @@ Date:   Sat Sep 3 21:34:21 2022 -0400
 ...
 ```
 
+Sure enough, these match.
 Continuing on:
 
 ```
