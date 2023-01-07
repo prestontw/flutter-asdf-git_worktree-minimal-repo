@@ -24,5 +24,16 @@ TODO: test this with another project that isn't a git repo.
 - Make a dummy change and commit it---watch the pre-commit output and see that it reports the last commit of the branch we are on, not the repository the `pre-commit` file points to:
 
 ```
+flutter-pre-commit-git_worktree-minimal-repo on  main [⇡]
+❯ vim pre-commit
 
+flutter-pre-commit-git_worktree-minimal-repo on  main [!⇡]
+❯ cat pre-commit
+#!/usr/bin/env bash
+
+# This doesn't need to be `flutter`, just a location that is a git repository.
+(cd $HOME/git/advent-of-code-2020 && git -c log.showSignature=false log -n 1 --pretty=format:%H)
+
+flutter-pre-commit-git_worktree-minimal-repo on  main [!⇡]
+❯ cp pre-commit .git/hooks/pre-commit
 ```
